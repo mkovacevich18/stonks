@@ -1,0 +1,6 @@
+# pack-refs with: peeled fully-peeled sorted 
+33da75d0669c5738d680844c9fc41ac58abfc85c refs/heads/dev.options_eda
+3ffc1cdfe9510c895c528afaa031b150f014ff28 refs/heads/dev.time_series_analysis
+05234973758fca94b3462d5dd12dc83393c1c945 refs/heads/gh-pages
+0751a4a320c80c6f69a123ccb3d9a8df5f196b09 refs/heads/main
+3ffc1cdfe9510c895c528afaa031b150f014ff28 refs/pull/1/head
