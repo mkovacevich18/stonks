@@ -1,9 +1,11 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import date, datetime, timedelta, timezone
+from dateutil.relativedelta import relativedelta
+import pandas as pd
 import requests
-from datetime import datetime, timedelta, timezone
 from typing import Any
-
 
 class Client:
     """Polygon.io API client for fetching stock and options data."""
@@ -39,13 +41,6 @@ class Client:
 
         return results
 
-    def get_current_stock_price(self, ticker: str) -> float | None:
-        """Fetch the latest stock price."""
-        url = f"https://api.polygon.io/v2/last/trade/{ticker}"
-        data = self._make_request(url)
-        if data and "last" in data:
-            return data["last"]["price"]
-        return None
 
     def fetch_raw_option_contracts(self, ticker: str, limit: int = 1000) -> list[dict[str, Any]]:
         """Fetch raw option contracts."""
@@ -86,15 +81,28 @@ class Client:
 
         return filtered
 
-    def contracts_with_greeks(self, ticker: str, contracts: list[dict[str, Any]]) -> list[dict[str, Any]]:
-        """Enrich contracts with Greeks data."""
-        enriched: list[dict[str, Any]] = []
-        for contract in contracts:
+
+    def contracts_with_valid_greeks(self, ticker: str, contracts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        """
+        Enrich contracts with Greeks data in parallel and return only those with valid Greeks.
+        """
+        valid_contracts: list[dict[str, Any]] = []
+
+        def fetch_greeks(contract: dict[str, Any]) -> dict[str, Any] | None:
             greeks_data = self.analyze_option_contract(ticker, contract["ticker"])
-            if greeks_data:
+            if greeks_data and greeks_data.get("greeks"):
                 contract["greeks"] = greeks_data
-                enriched.append(contract)
-        return enriched
+                return contract
+            return None
+
+        with ThreadPoolExecutor(max_workers=10) as executor: 
+            futures = [executor.submit(fetch_greeks, c) for c in contracts]
+            for future in as_completed(futures):
+                result = future.result()
+                if result:
+                    valid_contracts.append(result)
+
+        return valid_contracts
 
     def get_option_contracts(
         self,
@@ -102,29 +110,56 @@ class Client:
         limit: int = 1000,
         min_days: int = 20,
         max_days: int = 120,
-    ) -> list[dict[str, Any]]:
-        """Fetch, filter, and enrich option contracts for a given ticker."""
+    ) -> pd.DataFrame:
+        """
+        Fetch, filter, and enrich option contracts for a given ticker.
+        Returns a pandas DataFrame instead of a list.
+        """
         raw_contracts = self.fetch_raw_option_contracts(ticker, limit)
         filtered_contracts = self.filter_contracts_by_expiration(raw_contracts, min_days, max_days)
-        enriched_contracts = self.contracts_with_greeks(ticker, filtered_contracts)
-        return enriched_contracts
+        valid_contracts = self.contracts_with_valid_greeks(ticker, filtered_contracts)
 
-    def get_latest_closing_price(
+        if not valid_contracts:
+            return pd.DataFrame()  
+
+        return pd.json_normalize(valid_contracts)
+
+    def get_price_history(
         self,
-        symbol: str,
-        from_date: str,
-        to_date: str,
+        ticker: str,
+        from_date: str | None = None,
+        to_date: str | None = None,
         multiplier: int = 1,
         timespan: str = "day",
-    ) -> float | None:
-        """Return the latest closing price for the given ticker within a date range."""
-        url = f"https://api.polygon.io/v2/aggs/ticker/{symbol}/range/{multiplier}/{timespan}/{from_date}/{to_date}"
-        params = {"adjusted": "true", "sort": "desc", "limit": 1}
+    ) -> pd.DataFrame:
+        """
+        Fetch historical OHLCV data for a ticker as a DataFrame.
+        - Default range: last 2 years up to today.
+        - Returns DataFrame with columns: timestamp, open, high, low, close, volume.
+        """
+        # Default range = last 2 years
+        if from_date is None or to_date is None:
+            today = date.today()
+            to_date = today.strftime("%Y-%m-%d")
+            from_date = (today - relativedelta(years=2)).strftime("%Y-%m-%d")
+
+        url = f"https://api.polygon.io/v2/aggs/ticker/{ticker}/range/{multiplier}/{timespan}/{from_date}/{to_date}"
+        params = {"adjusted": "true", "sort": "asc", "limit": 50000}
 
         data = self._make_request(url, params)
-        if data and "results" in data and data["results"]:
-            latest = data["results"][0]
-            return latest["c"]
+        if not data or "results" not in data or not data["results"]:
+            print(f"[WARN] No OHLCV data for {ticker} between {from_date} and {to_date}")
+            return pd.DataFrame()
 
-        print(f"[WARN] No closing price data for {symbol} between {from_date} and {to_date}")
-        return None
+        results = pd.DataFrame(data["results"])
+        results = results.rename(columns={
+            "o": "open",
+            "h": "high",
+            "l": "low",
+            "c": "close",
+            "v": "volume",
+            "t": "timestamp"
+        })
+        results["timestamp"] = pd.to_datetime(results["timestamp"], unit="ms")
+
+        return results
