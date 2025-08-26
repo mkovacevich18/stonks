@@ -1,0 +1,20 @@
+site_name: Stonks
+site_description: Documentation for the Stonks project
+site_url: https://mkovacevich18.github.io/stonks/
+repo_url: https://github.com/mkovacevich18/stonks
+repo_name: mkovacevich18/stonks
+
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Quickstart: getting-started.md
+  - Guides:
+      - Data Ingestion: guides/ingestion.md
+      - Plotting: guides/plotting.md
