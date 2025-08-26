@@ -1,0 +1,73 @@
+[project]
+name = "stonks"
+version = "0.1.0"
+description = "A misadventure into stocks"
+requires-python = ">=3.10"
+packages = [{ include = "stonks" }]
+
+[project.optional-dependencies]
+dev = [
+    "ipython",
+    "jupyterlab",
+    "pytest",
+    "black",
+    "ruff",
+    "scipy",
+    "statsmodels",
+    "quantlib",
+    "riskfolio-lib"
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.default-groups.default]
+dependencies = [
+    "pandas",
+    "requests",
+    "skfolio",
+    "python-dotenv",
+    "numpy",
+    "matplotlib",
+    "ipykernel",
+    "polygon-api-client",
+    "mplfinance",
+]
+
+[tool.uv.default-groups.dev]
+dependencies = [
+    "ipython",
+    "jupyterlab",
+    "pytest",
+    "black",
+    "ruff",
+    "scipy",
+    "statsmodels",
+    "quantlib",
+    "riskfolio-lib"
+]
+
+[tool.uv.workspace]
+members = ["stonks"]
+
+[tool.hatch.envs.stonks-dev]
+python = "3.12"
+directory = ".hatch/stonks-dev"
+dependencies = [
+    "pandas",
+    "requests",
+    "skfolio",
+    "dotenv",
+    "numpy",
+    "matplotlib",
+    "ipykernel",
+    "polygon-api-client",
+    "mplfinance",
+]
+extras = ["dev"]
+
+
+
+
+
