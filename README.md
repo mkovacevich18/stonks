@@ -1,9 +1,7 @@
 # Stonks
 Documenting a (mis)adventure for quantitative finance/data science. 
 
-#### TODO
-1. Implement unit testing
-2. Linter
-3. Connect an API to backtest hypotheses
-4. Connect to GCP(?)
+The goal of this repository is to perform analysis of various stock/options tickers and strategies. Our goal is to implement a strategy, back test it, and further develop it if needed.
+
+
 
