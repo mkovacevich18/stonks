@@ -7,65 +7,71 @@ packages = [{ include = "stonks" }]
 
 [project.optional-dependencies]
 dev = [
-    "ipython",
-    "jupyterlab",
-    "pytest",
-    "black",
-    "ruff",
-    "scipy",
-    "statsmodels",
-    "quantlib",
-    "riskfolio-lib"
+  "ipython",
+  "jupyterlab",
+  "pytest",
+  "black",
+  "ruff",
+  "scipy",
+  "statsmodels",
+  "quantlib",
+  "riskfolio-lib",
 ]
+
+[dependency-groups]
+default = [
+  "pandas",
+  "requests",
+  "skfolio",
+  "dotenv",            # keeping as "dotenv" since you confirmed
+  "numpy",
+  "matplotlib",
+  "ipykernel",
+  "polygon-api-client",
+  "mplfinance",
+  "seaborn",
+]
+dev = [
+  "ipython",
+  "jupyterlab",
+  "pytest",
+  "black",
+  "ruff",
+  "scipy",
+  "statsmodels",
+  "quantlib",
+  "riskfolio-lib",
+]
+docs = [
+  "mkdocs>=1.4",
+  "mkdocs-material>=9.0",
+  "mkdocstrings[python]>=0.19",
+]
+
+[tool.hatch.envs.stonks-dev]
+python = "3.12"
+directory = ".hatch/stonks-dev"
+extras = ["dev"]
+
+[tool.hatch.envs.docs]
+dependencies = [
+  "mkdocs>=1.4",
+  "mkdocs-material>=9.0",
+  "mkdocstrings[python]>=0.19"
+]
+
+[tool.hatch.envs.docs.scripts]
+build  = "mkdocs build --clean --strict"
+serve  = "mkdocs serve --dev-addr localhost:8000"
+deploy = "mkdocs gh-deploy -m 'Deploy site'"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
-[tool.uv.default-groups.default]
-dependencies = [
-    "pandas",
-    "requests",
-    "skfolio",
-    "python-dotenv",
-    "numpy",
-    "matplotlib",
-    "ipykernel",
-    "polygon-api-client",
-    "mplfinance",
-]
-
-[tool.uv.default-groups.dev]
-dependencies = [
-    "ipython",
-    "jupyterlab",
-    "pytest",
-    "black",
-    "ruff",
-    "scipy",
-    "statsmodels",
-    "quantlib",
-    "riskfolio-lib"
-]
-
 [tool.uv.workspace]
 members = ["stonks"]
 
-[tool.hatch.envs.stonks-dev]
-python = "3.12"
-directory = ".hatch/stonks-dev"
-dependencies = [
-    "pandas",
-    "requests",
-    "skfolio",
-    "dotenv",
-    "numpy",
-    "matplotlib",
-    "ipykernel",
-    "polygon-api-client",
-    "mplfinance",
-]
-extras = ["dev"]
 
 
 
