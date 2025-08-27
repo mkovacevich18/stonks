@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#quickstart" class="md-skip">
+        <a href="#overview" class="md-skip">
           Skip to content
         </a>
       
@@ -310,6 +310,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Quickstart
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -321,6 +334,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#getting-started" class="md-nav__link">
+    <span class="md-ellipsis">
+      Getting Started
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -451,8 +492,22 @@
   
 
 
-<h1 id="quickstart">Quickstart</h1>
-<p>How to install &amp; run</p>
+<h1 id="overview">Overview</h1>
+<p>This documentation aims to cover an analysis and methods to decide which options can be profitable. For options data, we will be pulling from Polygon.io (https://polygon.io/docs/rest/options/overview).</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>So far, we have a uv/hatch managed <code>stonks</code> package. First, the repository should be cloned and then we can get started.</p>
+<ol>
+<li>
+<p>In the directory that contains the repository, run the command <code>hatch shell env create stonks-dev</code>. This will create a venv called <code>stonks-dev</code> with all the required packages. </p>
+</li>
+<li>
+<p>Each user must have their own API key for Polygon. The <code>data_preprocessing.py</code> script has been set up so that we can retrieve options data from the <code>Options Starter</code> plan and the </p>
+<ul>
+<li>This plan allows us to analyze the Greeks, historical options pricing, and various other "snapshots" of the stock.</li>
+<li>The API KEY should also allow us to get access to the <code>Stocks Basics</code> plan.</li>
+</ul>
+</li>
+</ol>
 
 
 
