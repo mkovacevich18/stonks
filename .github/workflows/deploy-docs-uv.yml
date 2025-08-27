@@ -35,6 +35,6 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          external_repository: your-username/stonks.github.io
+          external_repository: mkovacevich18/stonks.github.io
           publish_dir: ./site
           publish_branch: main
