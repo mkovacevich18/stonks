@@ -31,9 +31,10 @@ jobs:
         run: |
           hatch run docs:build
 
-      - name: Deploy to gh-pages
+      - name: Deploy to stonks.github.io
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          external_repository: your-username/stonks.github.io
           publish_dir: ./site
-          publish_branch: gh-pages
+          publish_branch: main
