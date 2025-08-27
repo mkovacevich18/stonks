@@ -1,4 +1,6 @@
 site_name: Stonks
+theme:
+  name: material
 site_description: Documentation for the Stonks project
 site_url: https://mkovacevich18.github.io/stonks/
 repo_url: https://github.com/mkovacevich18/stonks
@@ -6,6 +8,17 @@ repo_name: mkovacevich18/stonks
 
 theme:
   name: material
+  palette:
+    primary: indigo
+    accent: indigo
+  font:
+    text: Roboto
+    code: Roboto Mono
+  features:
+    - navigation.expand
+    - navigation.sections
+    - navigation.top
+    - toc.integrate
 
 plugins:
   - search
