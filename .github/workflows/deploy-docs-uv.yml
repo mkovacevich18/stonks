@@ -2,7 +2,7 @@ name: Deploy docs (hatch)
 
 on:
   push:
-    branches: [ feat.documentation ]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
