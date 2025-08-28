@@ -37,13 +37,13 @@ class IndicatorPlotter:
         for col, color in {
             "sma_short": "#1f77b4",  # blue
             "sma_long": "#0b3d91",   # dark blue
-            "ema_short": "#2ca02c",  # teal
-            "ema_long": "#006400"    # dark teal
+            "ema_short": "#BD608D",  # teal
+            "ema_long": "#DA1233"    # dark teal
         }.items():
             ax.plot(self.indicators.index, self.indicators[col], label=col.replace("_", " ").title(), color=color)
         
         # Bollinger Bands
-        ax.plot(self.indicators.index, self.indicators["bb_mid"], label="BB Mid", color="#ff7f0e")  # mid band
+        ax.plot(self.indicators.index, self.indicators["bb_mid"], label="Bollinger Band Mid", color="#ff7f0e")  # mid band
         ax.fill_between(
             self.indicators.index,
             self.indicators["bb_lower"],
