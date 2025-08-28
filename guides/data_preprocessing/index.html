@@ -76,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#data-ingestion" class="md-skip">
+        <a href="#data-preprocessing" class="md-skip">
           Skip to content
         </a>
       
@@ -385,6 +385,19 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Data Preprocessing
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
@@ -396,6 +409,43 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#options-data-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Options Data Fields:
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#historical-data-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      Historical Data Fields
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -549,7 +599,61 @@
   
 
 
-<h1 id="data-ingestion">Data Ingestion</h1>
+<h1 id="data-preprocessing">Data Preprocessing</h1>
+<p>This page refers to how we preprocess and source our data. </p>
+<p><strong>Data Source:</strong> <code>Polygon.io</code> (<a href="https://polygon.io/">Polygon Website</a>)</p>
+<p>The ETL pipeline is currently set up to read in an API_KEY from <code>Polygon.io</code> - this API_KEY should be unique to each user of this repo. Polygon has data pertaining to options, futures, Forex, etc. The we are able to access if a function of which tier we are willing to pay for. For historical ticker data, we just use the free option. For stock options, we use the <code>option starter</code> plan.</p>
+<p>So far, the goal is relavitely simple in how we load and clean data. We get options contracts that are set to expire within a range of days from today's current data (by defauly the range is 20 - 120 days from now). We filter out options contracts that have NULL values and no valid greeks.
+* We could make a cleaner dataset by placing filters on the option's open interest, etc (further eda is needed here).
+* The notebook <code>options.ipynb</code> contains brief showings of what the filtered contracts dataframe looks like as well</p>
+<h3 id="options-data-fields">Options Data Fields:</h3>
+<ul>
+<li>cfi  </li>
+<li>contract_type  </li>
+<li>exercise_style  </li>
+<li>expiration_date  </li>
+<li>primary_exchange  </li>
+<li>shares_per_contract  </li>
+<li>strike_price  </li>
+<li>ticker  </li>
+<li>underlying_ticker  </li>
+<li>greeks.details.contract_type  </li>
+<li>greeks.details.exercise_style  </li>
+<li>greeks.details.expiration_date  </li>
+<li>greeks.details.shares_per_contract  </li>
+<li>greeks.details.strike_price  </li>
+<li>greeks.details.ticker  </li>
+<li>greeks.greeks.delta  </li>
+<li>greeks.greeks.gamma  </li>
+<li>greeks.greeks.theta  </li>
+<li>greeks.greeks.vega  </li>
+<li>greeks.implied_volatility  </li>
+<li>greeks.open_interest  </li>
+<li>greeks.underlying_asset.ticker  </li>
+<li>greeks.day.change  </li>
+<li>greeks.day.change_percent  </li>
+<li>greeks.day.close  </li>
+<li>greeks.day.high  </li>
+<li>greeks.day.last_updated  </li>
+<li>greeks.day.low  </li>
+<li>greeks.day.open  </li>
+<li>greeks.day.previous_close  </li>
+<li>greeks.day.volume  </li>
+<li>greeks.day.vwap  </li>
+</ul>
+<p>Analyzing the same ticker, we pull in 2 years of historical data and look at the chart. This data is a lot more limited since it is "free" but nonetheless, it provides a good starting point.</p>
+<h3 id="historical-data-fields">Historical Data Fields</h3>
+<ul>
+<li>volume</li>
+<li>vw</li>
+<li>open</li>
+<li>close</li>
+<li>high</li>
+<li>low</li>
+<li>timestamp</li>
+<li>n (number of trades)</li>
+</ul>
+<p>There are additional types of data that we could look into - maybe Futures such a <code>VIX</code> or maybe other data vendors. We also need to figure out the gaps in Polygon's data and how what data we could use to fill these gaps.</p>
 
 
 
