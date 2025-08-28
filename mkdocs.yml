@@ -29,5 +29,6 @@ nav:
   - Getting Started:
       - Quickstart: getting-started.md
   - Guides:
-      - Data Ingestion: guides/ingestion.md
+      - Data Preprocessing: guides/data_preprocessing.md
+      - Feature Engineering: guides/feature_engineering.md
       - Plotting: guides/plotting.md
