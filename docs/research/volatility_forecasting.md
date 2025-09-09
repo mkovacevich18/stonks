@@ -3,8 +3,11 @@ As the name implies, our goal is to forecast the future volatility of certian eq
 
 ## Delta Hedging
 Mathematically, delta is represented as the partial derivative:
-![delta equation](https://latex.codecogs.com/svg.latex?\Delta=\frac{\partial%20V}{\partial%20S})
+
+$$
+\Delta = \frac{\partial V}{\partial S}
+$$
 
 of the option's fair value with respect to the spot price of the underlying security.
 
-Delta is a function of the spot price \( S \), strike price, and time to expiry.
+Delta is a function of the spot price $S$, strike price, and time to expiry.
