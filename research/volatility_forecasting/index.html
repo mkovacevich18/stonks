@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
@@ -72,6 +72,11 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
+      
+        
+        <a href="#what-is-volatility-forecasting" class="md-skip">
+          Skip to content
+        </a>
       
     </div>
     <div data-md-component="announce">
@@ -496,6 +501,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Votatility Forecasting
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -508,6 +528,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#delta-hedging" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delta Hedging
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -540,9 +588,13 @@
   
 
 
-  <h1>Votatility Forecasting</h1>
-
-
+<h1 id="what-is-volatility-forecasting">What is Volatility Forecasting</h1>
+<p>As the name implies, our goal is to forecast the future volatility of certian equities. In doing so, we can trade options or hedge options based off volatility. Rather than having to predict the future price, we can theoretically profit based on the spread of the implied volatility (IV) and the realized volatility (and make bets based off the theoretical volatility) - which leads to delta hedging. </p>
+<h2 id="delta-hedging">Delta Hedging</h2>
+<p>Mathematically, delta is represented as the partial derivative<br />
+( \frac{\partial V}{\partial S} )<br />
+of the option's fair value with respect to the spot price of the underlying security.</p>
+<p>Delta is a function of the spot price ( S ), strike price, and time to expiry.</p>
 
 
 
